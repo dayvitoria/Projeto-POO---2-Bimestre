@@ -16,36 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `medicamentos`
+-- Table structure for table `superintendenciamed`
 --
 
-DROP TABLE IF EXISTS `medicamentos`;
+DROP TABLE IF EXISTS `superintendenciamed`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `medicamentos` (
-  `idmedicamentos` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(45) DEFAULT NULL,
-  `descricao` varchar(45) DEFAULT NULL,
-  `quantidade` int(11) DEFAULT NULL,
-  `categoria` varchar(45) DEFAULT NULL,
-  `data_inicio` date DEFAULT NULL,
-  `data_final` date DEFAULT NULL,
-  `periodo` int(11) DEFAULT NULL,
-  `id_c` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idmedicamentos`),
-  KEY `fk_id_idx` (`id_c`),
-  CONSTRAINT `fk_id` FOREIGN KEY (`id_c`) REFERENCES `cadastro` (`idcadastro`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+CREATE TABLE `superintendenciamed` (
+  `idsuperintendenciaMed` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_medicamento` varchar(45) DEFAULT NULL,
+  `data` date DEFAULT NULL,
+  `hora` time DEFAULT NULL,
+  `confirmacao` int(11) DEFAULT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
+  `id_medicamento` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idsuperintendenciaMed`),
+  KEY `fk_id_usuario_idx` (`id_usuario`),
+  KEY `fk_id_medicamento_idx` (`id_medicamento`),
+  CONSTRAINT `fk_id_medicamento` FOREIGN KEY (`id_medicamento`) REFERENCES `medicamentos` (`idmedicamentos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `cadastro` (`idcadastro`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `medicamentos`
+-- Dumping data for table `superintendenciamed`
 --
 
-LOCK TABLES `medicamentos` WRITE;
-/*!40000 ALTER TABLE `medicamentos` DISABLE KEYS */;
-INSERT INTO `medicamentos` VALUES (1,'Multigrip','Remédio para gripe',4,'Antialérgicos','2017-12-04','2017-12-19',15,5),(2,'adjshda','ahdjshdajsh',2,'Antibióticos',NULL,NULL,NULL,5),(3,'adjkajdsak','jsakdjsakjds',10,'Antibióticos',NULL,NULL,10,5),(4,'asdadsad','adasdasdas',10,'Antibióticos','2017-12-04','2017-12-12',10,5),(5,'dipirona','dipirona',10,'Antibióticos',NULL,NULL,10,5),(6,'teste','teste',10,'Antibióticos',NULL,NULL,10,5),(7,'jkjkjkj','kjkjkj',10,'Antibióticos','2017-12-04','2017-12-14',10,5);
-/*!40000 ALTER TABLE `medicamentos` ENABLE KEYS */;
+LOCK TABLES `superintendenciamed` WRITE;
+/*!40000 ALTER TABLE `superintendenciamed` DISABLE KEYS */;
+INSERT INTO `superintendenciamed` VALUES (1,NULL,NULL,'10:10:00',0,NULL,NULL),(2,'Multigrip',NULL,NULL,1,5,1),(3,'dipirona','2017-12-04','20:25:21',1,5,5),(4,'dipirona','2017-12-04','21:19:51',1,5,5),(5,'Multigrip','2017-12-04','21:20:05',1,5,1),(6,'Multigrip','2005-12-17','20:32:31',1,5,1);
+/*!40000 ALTER TABLE `superintendenciamed` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
