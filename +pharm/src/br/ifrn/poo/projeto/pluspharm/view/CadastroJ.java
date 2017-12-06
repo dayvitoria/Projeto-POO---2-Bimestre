@@ -182,9 +182,9 @@ public class CadastroJ extends javax.swing.JDialog {
         String cpf = jTextField4.getText();
         String senha = jPasswordField1.getText();
         
-        Cadastro cad;
-        cad = new Cadastro();
-        Pessoa p = new Pessoa(nome, email, idade, cpf, senha);
+        Registro cad;
+        cad = new Registro();
+        Usuario p = new Usuario(nome, email, idade, cpf, senha);
         cad.cadastrar(p);
         
     }//GEN-LAST:event_jButton1ActionPerformed

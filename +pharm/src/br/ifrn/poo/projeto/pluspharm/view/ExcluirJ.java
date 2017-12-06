@@ -116,7 +116,7 @@ public class ExcluirJ extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Cadastro cad = new Cadastro();
+        Registro cad = new Registro();
         boolean result = cad.excluir(jTextField1.getText());
         
         if(result == true){

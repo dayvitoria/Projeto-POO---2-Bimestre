@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
-
+import br.ifrn.poo.projeto.pluspharm.controller.*;
 /**
  *
  * @author dayan
@@ -40,6 +40,7 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -65,13 +66,13 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Descrição", "Quantidade", "Categoria"
+                "idMedicamento", "Nome", "Descrição", "Quantidade", "Categoria"
             }
         ));
         try {
@@ -83,7 +84,7 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
 
             con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
 
-            String query = "SELECT med.nome, descricao, quantidade, categoria FROM  medicamentos  med JOIN cadastro ON id_c = idcadastro ";
+            String query = "SELECT idmedicamentos, med.nome, descricao, quantidade, categoria FROM  medicamentos  med JOIN cadastro ON id_c = idcadastro ";
 
             PreparedStatement stmt = con.prepareStatement(query);
 
@@ -94,7 +95,7 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
             model.setNumRows(0);
 
             while(rs.next()){
-                model.addRow(new Object[]{rs.getString("nome"), rs.getString("descricao"), rs.getString("quantidade"), rs.getString("categoria")});
+                model.addRow(new Object[]{rs.getString("idmedicamentos"), rs.getString("nome"), rs.getString("descricao"), rs.getString("quantidade"), rs.getString("categoria")});
 
             }
             stmt.executeUpdate();
@@ -129,8 +130,15 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))
         );
+
+        jButton1.setText("Confirmar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,13 +146,20 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(138, 138, 138)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -164,6 +179,17 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jTable1ComponentAdded
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String index = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
+        String nome = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1);
+        
+        Registro r = new Registro();
+        r.confirmarMedicamentoTomado(nome, Integer.parseInt(index));
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,6 +234,7 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

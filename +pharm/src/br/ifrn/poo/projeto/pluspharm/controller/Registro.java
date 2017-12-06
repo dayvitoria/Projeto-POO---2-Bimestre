@@ -18,7 +18,7 @@ import sun.misc.BASE64Encoder;
  *
  * @author dayan
  */
-public class Cadastro {
+public class Registro {
     int id_c;
     
     public String criptografa(String senha){
@@ -33,7 +33,7 @@ public class Cadastro {
 		return senha;
 	}
     
-    public void cadastrar(Pessoa pessoa){
+    public void cadastrar(Usuario pessoa){
         
         String nome =  pessoa.getNome();
         String email = pessoa.getEmail();
@@ -131,7 +131,7 @@ public class Cadastro {
             return resultado;
     }
     
-    public void atualizar(String cpf, Pessoa pessoa){
+    public void atualizar(String cpf, Usuario pessoa){
         String nome = pessoa.getNome();
         String email = pessoa.getEmail();
         String idade = pessoa.getIdade();
@@ -217,14 +217,9 @@ public class Cadastro {
 
     }  
     
-    public void adicionarMedicamento(Medicamento medicamento){
-        String nome =  medicamento.getNome();
-        String descricao = medicamento.getDescricao();
-        String quantidade = medicamento.getQuantidade();
-        String categoria = medicamento.getCategoria();
-        int id_c = medicamento.getId_c();
+    public void data(String nome, int periodo){
         
-        try {
+    try {
             // TODO add your handling code here:
 
             Class.forName("com.mysql.jdbc.Driver");
@@ -233,18 +228,14 @@ public class Cadastro {
             
             con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
-            String query = "INSERT INTO medicamentos (nome, descricao, quantidade, categoria, id_c) VALUES (?, ?, ?, ?, ?)";
+            String query = "UPDATE medicamentos SET data_inicio = CURRENT_DATE(), data_final = DATE_ADD(CURDATE(), INTERVAL ? DAY) WHERE nome = ?";
             
             PreparedStatement stmt = con.prepareStatement(query);
             Login l = new Login();
             id_c = l.recuperar_id();
-            stmt.setString(1, nome);
-            stmt.setString(2, descricao);
-            stmt.setString(3, quantidade);
-            stmt.setString(4, categoria);
-            stmt.setString(5, Integer.toString(id_c));
-            
-            
+            stmt.setString(1, Integer.toString(periodo));
+            stmt.setString(2, nome);
+       
             
             stmt.executeUpdate();
             
@@ -257,6 +248,86 @@ public class Cadastro {
             System.out.println("Ocorreu um erro de SQL");
         }
     
+    }
+    public void adicionarMedicamento(Medicamento medicamento){
+        String nome =  medicamento.getNome();
+        String descricao = medicamento.getDescricao();
+        int quantidade = medicamento.getQuantidade();
+        String categoria = medicamento.getCategoria();
+        int periodo = medicamento.getPeriodo();
+        int id_c = medicamento.getId_c();
+        
+        try {
+            // TODO add your handling code here:
+
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            Connection con;
+            
+            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
+            
+            String query = "INSERT INTO medicamentos (nome, descricao, quantidade, categoria, periodo, id_c) VALUES (?, ?, ?, ?, ?, ?)";
+            
+            PreparedStatement stmt = con.prepareStatement(query);
+            Login l = new Login();
+            id_c = l.recuperar_id();
+            stmt.setString(1, nome);
+            stmt.setString(2, descricao);
+            stmt.setString(3, Integer.toString(quantidade));
+            stmt.setString(4, categoria);
+            stmt.setString(5, Integer.toString(periodo));
+            stmt.setString(6, Integer.toString(id_c));
+            
+            
+            
+            
+            
+            stmt.executeUpdate();
+            Registro r = new Registro();
+            r.data(nome, periodo);
+            stmt.close();
+            con.close();
+            
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Não foi possível encontrar a classe");
+        } catch (SQLException ex) {
+            System.out.println("Ocorreu um erro de SQL");
+        }
+    
+    
+    }
+    
+    public void confirmarMedicamentoTomado(String nome_medicamento, int id_medicamento){
+        
+        try {
+            // TODO add your handling code here:
+
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            Connection con;
+            
+            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
+            
+            String query = "INSERT INTO superintendenciamed (nome_medicamento, data, hora, confirmacao, id_usuario, id_medicamento) VALUES (?, CURRENT_DATE(), CURRENT_TIME(), ?, ?, ?)";
+            
+            PreparedStatement stmt = con.prepareStatement(query);
+            Login l = new Login();
+            id_c = l.recuperar_id();
+            stmt.setString(1, nome_medicamento);
+            stmt.setString(2, Integer.toString(1));
+            stmt.setString(3, Integer.toString(id_c));
+            stmt.setString(4, Integer.toString(id_medicamento));
+            
+            
+            stmt.executeUpdate();
+            stmt.close();
+            con.close();
+            
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Não foi possível encontrar a classe");
+        } catch (SQLException ex) {
+            System.out.println("Ocorreu um erro de SQL");
+        }
     
     }
                

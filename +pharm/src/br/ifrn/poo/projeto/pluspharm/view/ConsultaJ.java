@@ -169,7 +169,7 @@ public class ConsultaJ extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Cadastro cad = new Cadastro();
+        Registro cad = new Registro();
         String[] result = new String[3];
         
         result = cad.consultar(jTextField1.getText());
@@ -182,8 +182,8 @@ public class ConsultaJ extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Cadastro cad = new Cadastro();
-        Pessoa p = new Pessoa();
+        Registro cad = new Registro();
+        Usuario p = new Usuario();
         p.setNome(jTextField2.getText());
         p.setEmail(jTextField3.getText());
         p.setIdade(jTextField4.getText());

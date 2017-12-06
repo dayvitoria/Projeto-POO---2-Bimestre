@@ -18,8 +18,8 @@ import java.sql.SQLException;
 public class Login {
     int id_c;
     
-    public String autenticar(String cpf, String senha){
-        Cadastro c = new Cadastro();
+    public boolean autenticar(String cpf, String senha){
+        Registro c = new Registro();
         String senhac = c.criptografa(senha);
         String login = "";
         try {
@@ -69,7 +69,7 @@ public class Login {
             System.out.println("Ocorreu um erro de SQL");
         }
             
-        return "Deu certo!";
+        return true;
     }
     
     public void sair(){

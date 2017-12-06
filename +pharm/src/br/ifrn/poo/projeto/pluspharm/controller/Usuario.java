@@ -9,18 +9,18 @@ package br.ifrn.poo.projeto.pluspharm.controller;
  *
  * @author dayan
  */
-public class Pessoa {
+public class Usuario {
     protected String nome;
     protected String email;
     protected String idade;
     protected String cpf;
     protected String senha;
 
-    public Pessoa(){
+    public Usuario(){
     
     }
     
-    public Pessoa(String nome, String email, String idade, String cpf, String senha) {
+    public Usuario(String nome, String email, String idade, String cpf, String senha) {
         this.nome = nome;
         this.email = email;
         this.idade = idade;

@@ -10,8 +10,10 @@ package br.ifrn.poo.projeto.pluspharm.view;
  */
 public class Main {
     public static void main(String[] args) {
-        PrincipalJFrame princ = new PrincipalJFrame();
-        princ.setVisible(true);
+        MenuPrincipal mp = new MenuPrincipal();
+        mp.setVisible(true);
+        /*PrincipalJFrame princ = new PrincipalJFrame();
+        princ.setVisible(true);*/
     }
     
     

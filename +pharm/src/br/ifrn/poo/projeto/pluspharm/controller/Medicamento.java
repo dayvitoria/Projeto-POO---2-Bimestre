@@ -5,6 +5,8 @@
  */
 package br.ifrn.poo.projeto.pluspharm.controller;
 
+import java.sql.Date;
+
 /**
  *
  * @author dayan
@@ -12,20 +14,27 @@ package br.ifrn.poo.projeto.pluspharm.controller;
 public class Medicamento {
     protected String nome;
     protected String descricao;
-    protected String quantidade;
+    protected int quantidade;
     protected String categoria;
+    protected Date data_inicio;
+    protected Date data_final;
+    protected int periodo;
     protected int id_c;
 
     
     public Medicamento(){
     }
-    
-    public Medicamento(String nome, String descricao, String quantidade, String categoria) {
+
+    public Medicamento(String nome, String descricao, int quantidade, String categoria, int periodo) {
         this.nome = nome;
         this.descricao = descricao;
         this.quantidade = quantidade;
         this.categoria = categoria;
+        this.periodo = periodo;
+        
     }
+    
+    
 
     
     public String getNome() {
@@ -44,11 +53,11 @@ public class Medicamento {
         this.descricao = descricao;
     }
 
-    public String getQuantidade() {
+    public int getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(String quantidade) {
+    public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -66,6 +75,30 @@ public class Medicamento {
 
     public void setId_c(int id_c) {
         this.id_c = id_c;
+    }
+
+    public Date getData_inicio() {
+        return data_inicio;
+    }
+
+    public void setData_inicio(Date data_inicio) {
+        this.data_inicio = data_inicio;
+    }
+
+    public Date getData_final() {
+        return data_final;
+    }
+
+    public void setData_final(Date data_final) {
+        this.data_final = data_final;
+    }
+
+    public int getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(int periodo) {
+        this.periodo = periodo;
     }
     
     
