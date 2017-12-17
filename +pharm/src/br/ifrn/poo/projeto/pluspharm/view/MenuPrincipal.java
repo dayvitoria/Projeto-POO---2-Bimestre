@@ -130,6 +130,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         LoginJ login = new LoginJ(null, true);
         login.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
