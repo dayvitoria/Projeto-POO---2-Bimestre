@@ -16,36 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `superintendenciamed`
+-- Table structure for table `usuario`
 --
 
-DROP TABLE IF EXISTS `superintendenciamed`;
+DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `superintendenciamed` (
-  `idsuperintendenciaMed` int(11) NOT NULL AUTO_INCREMENT,
-  `nome_medicamento` varchar(45) DEFAULT NULL,
-  `data` date DEFAULT NULL,
-  `hora` time DEFAULT NULL,
-  `confirmacao` int(11) DEFAULT NULL,
-  `id_usuario` int(11) DEFAULT NULL,
-  `id_medicamento` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idsuperintendenciaMed`),
-  KEY `fk_id_usuario_idx` (`id_usuario`),
-  KEY `fk_id_medicamento_idx` (`id_medicamento`),
-  CONSTRAINT `fk_id_medicamento` FOREIGN KEY (`id_medicamento`) REFERENCES `medicamentos` (`idmedicamentos`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `fk_id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+CREATE TABLE `usuario` (
+  `idusuario` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `idade` int(11) DEFAULT NULL,
+  `cpf` varchar(14) DEFAULT NULL,
+  `senha` varchar(100) DEFAULT NULL,
+  `logado` int(1) DEFAULT NULL,
+  PRIMARY KEY (`idusuario`),
+  UNIQUE KEY `cpf_UNIQUE` (`cpf`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `superintendenciamed`
+-- Dumping data for table `usuario`
 --
 
-LOCK TABLES `superintendenciamed` WRITE;
-/*!40000 ALTER TABLE `superintendenciamed` DISABLE KEYS */;
-INSERT INTO `superintendenciamed` VALUES (1,NULL,NULL,'10:10:00',0,NULL,NULL),(2,'Multigrip','2017-12-12','21:14:33',1,8,9),(4,'Multigrip','2017-12-16','17:33:58',1,8,9),(5,'Diclofenaco','2017-12-16','18:03:11',1,8,12),(6,'Buscofem','2017-12-16','23:17:42',1,8,16);
-/*!40000 ALTER TABLE `superintendenciamed` ENABLE KEYS */;
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (8,'Dayane','dayane.vitoria@hotmail.com',19,'111.111.111-11','KyOmT8U+buZMSqo1SfJlmw==',1);
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-17 13:53:03
+-- Dump completed on 2017-12-17 13:53:04

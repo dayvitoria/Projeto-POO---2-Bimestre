@@ -31,11 +31,11 @@ CREATE TABLE `medicamentos` (
   `data_inicio` date DEFAULT NULL,
   `data_final` date DEFAULT NULL,
   `periodo` int(11) DEFAULT NULL,
-  `id_c` int(11) DEFAULT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
   PRIMARY KEY (`idmedicamentos`),
-  KEY `fk_id_idx` (`id_c`),
-  CONSTRAINT `fk_id` FOREIGN KEY (`id_c`) REFERENCES `cadastro` (`idcadastro`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+  KEY `fk_id_idx` (`id_usuario`),
+  CONSTRAINT `fk_id` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `medicamentos` (
 
 LOCK TABLES `medicamentos` WRITE;
 /*!40000 ALTER TABLE `medicamentos` DISABLE KEYS */;
-INSERT INTO `medicamentos` VALUES (1,'Multigrip','Remédio para gripe',4,'Antialérgicos','2017-12-04','2017-12-19',15,5),(2,'adjshda','ahdjshdajsh',2,'Antibióticos',NULL,NULL,NULL,5),(3,'adjkajdsak','jsakdjsakjds',10,'Antibióticos',NULL,NULL,10,5),(4,'asdadsad','adasdasdas',10,'Antibióticos','2017-12-04','2017-12-12',10,5),(5,'dipirona','dipirona',10,'Antibióticos',NULL,NULL,10,5),(6,'teste','teste',10,'Antibióticos',NULL,NULL,10,5),(7,'jkjkjkj','kjkjkj',10,'Antibióticos','2017-12-04','2017-12-14',10,5);
+INSERT INTO `medicamentos` VALUES (9,'Multigrip','gripe',10,'Antibióticos','2017-12-17','2017-12-27',10,8),(12,'Diclofenaco','dores',10,'Analségicos','2017-12-16','2017-12-26',10,8),(16,'Buscofem','remédio pra cólica',2,'Analségicos','2017-12-16','2017-12-24',8,8);
 /*!40000 ALTER TABLE `medicamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-05 21:38:41
+-- Dump completed on 2017-12-17 13:53:03
