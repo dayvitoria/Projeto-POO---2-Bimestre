@@ -6,6 +6,7 @@
 package br.ifrn.poo.projeto.pluspharm.view;
 
 import br.ifrn.poo.projeto.pluspharm.controller.Login;
+import br.ifrn.poo.projeto.pluspharm.model.Conexao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,7 +22,8 @@ import javax.swing.table.DefaultTableModel;
  * @author dayan
  */
 public class GerenciarMedicamentoJ extends javax.swing.JDialog {
-
+    
+    Conexao conexao = new Conexao();
     /**
      * Creates new form GerenciarMedicamentoJ
      */
@@ -66,14 +69,11 @@ public class GerenciarMedicamentoJ extends javax.swing.JDialog {
         ));
         Login l = new Login();
         int id = l.recuperar_id();
+        Conexao conexao = new Conexao();
+        Connection con = conexao.getConexao();
+
         try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-
-            Connection con;
-
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
 
             String query = "SELECT nome_medicamento, DATE_FORMAT(data, '%d/%m/%y') as data, hora FROM  superintendenciamed JOIN usuario ON id_usuario = idusuario  WHERE confirmacao = 1 and idusuario = ?";
 
@@ -96,14 +96,17 @@ public class GerenciarMedicamentoJ extends javax.swing.JDialog {
             stmt.close();
             con.close();
 
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
-        } catch (SQLException ex) {
-            System.out.println("Ocorreu um erro de SQL");
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Ocorreu um erro de SQL");
         }
         jScrollPane1.setViewportView(jTable1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Data", "Hora", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Data" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,36 +197,29 @@ public class GerenciarMedicamentoJ extends javax.swing.JDialog {
         Login l = new Login();
         int id = l.recuperar_id();
         String categoria = "";
+        Connection con2 = conexao.getConexao();
         if(jComboBox1.getSelectedItem() == "Nome"){
             categoria = "nome";
         }else if(jComboBox1.getSelectedItem() == "Data"){
             categoria = "data";
-        }else if(jComboBox1.getSelectedItem() == "Hora"){
-            categoria = "hora";
         }
         
-        String query = "";
+        String query = "", texto = "";
         try {
             // TODO add your handling code here:
 
-            Class.forName("com.mysql.jdbc.Driver");
-
-            Connection con;
-
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
-
             if(categoria == "nome"){
                 query = "SELECT nome_medicamento, DATE_FORMAT(data, '%d/%m/%y') as data, hora FROM  superintendenciamed JOIN usuario ON id_usuario = idusuario  WHERE confirmacao = 1 and idusuario = ? and nome_medicamento LIKE ?";
+                texto = "%"+jTextField1.getText()+"%";
             }else if(categoria == "data"){
                 query = "SELECT nome_medicamento, DATE_FORMAT(data, '%d/%m/%y') as data, hora FROM  superintendenciamed JOIN usuario ON id_usuario = idusuario  WHERE confirmacao = 1 and idusuario = ? and data = DATE_FORMAT(?, '%d/%m/%y')";
-            }else if(categoria == "hora"){
-                query = "SELECT nome_medicamento, DATE_FORMAT(data, '%d/%m/%y') as data, hora FROM  superintendenciamed JOIN usuario ON id_usuario = idusuario  WHERE confirmacao = 1 and idusuario = ? and hora = TIME_FORMAT(?, '%H:%i')";
+                texto = jTextField1.getText();
             }
 
-            PreparedStatement stmt = con.prepareStatement(query);
+            PreparedStatement stmt = con2.prepareStatement(query);
             
             stmt.setString(1, Integer.toString(id));
-            stmt.setString(2, jTextField1.getText());
+            stmt.setString(2, texto);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -238,14 +234,16 @@ public class GerenciarMedicamentoJ extends javax.swing.JDialog {
             stmt.executeQuery();
 
             stmt.close();
-            con.close();
+            con2.close();
 
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
-        } catch (SQLException ex) {
-            System.out.println("Ocorreu um erro de SQL");
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Ocorreu um erro de SQL");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments

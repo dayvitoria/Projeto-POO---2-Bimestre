@@ -12,7 +12,7 @@ package br.ifrn.poo.projeto.pluspharm.controller;
 public class Usuario {
     protected String nome;
     protected String email;
-    protected String idade;
+    protected int idade;
     protected String cpf;
     protected String senha;
 
@@ -20,7 +20,7 @@ public class Usuario {
     
     }
     
-    public Usuario(String nome, String email, String idade, String cpf, String senha) {
+    public Usuario(String nome, String email, int idade, String cpf, String senha) {
         this.nome = nome;
         this.email = email;
         this.idade = idade;
@@ -44,11 +44,11 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getIdade() {
+    public int getIdade() {
         return idade;
     }
 
-    public void setIdade(String idade) {
+    public void setIdade(int idade) {
         this.idade = idade;
     }
 

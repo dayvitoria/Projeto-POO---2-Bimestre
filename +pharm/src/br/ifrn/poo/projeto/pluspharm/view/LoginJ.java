@@ -5,6 +5,7 @@
  */
 package br.ifrn.poo.projeto.pluspharm.view;
 import br.ifrn.poo.projeto.pluspharm.controller.*;
+import javax.swing.JOptionPane;
 /**
  *
  * @author dayan
@@ -159,7 +160,7 @@ public class LoginJ extends javax.swing.JDialog {
             MenuPrincipal menu = new MenuPrincipal();
             menu.dispose();
          }else{
-             System.out.println("CPF ou senha incorretos!");
+             JOptionPane.showMessageDialog(null,"CPF ou senha incorretos!");
          }
     }//GEN-LAST:event_jButton1ActionPerformed
 

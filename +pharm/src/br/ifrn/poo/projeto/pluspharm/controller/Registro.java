@@ -5,6 +5,7 @@
  */
 package br.ifrn.poo.projeto.pluspharm.controller;
 
+import br.ifrn.poo.projeto.pluspharm.model.Conexao;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import sun.misc.BASE64Encoder;
 import sun.rmi.runtime.Log;
 
@@ -22,6 +24,8 @@ import sun.rmi.runtime.Log;
  */
 public class Registro {
     int id_c;
+    Conexao conexao = new Conexao();
+    Connection con = conexao.getConexao();
     
     public String criptografa(String senha){
 		try{
@@ -39,18 +43,12 @@ public class Registro {
         
         String nome =  pessoa.getNome();
         String email = pessoa.getEmail();
-        String idade = pessoa.getIdade();
+        int idade = pessoa.getIdade();
         String cpf = pessoa.getCpf();
         String senha = criptografa(pessoa.getSenha());
         
         try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "INSERT INTO usuario (nome, email, idade, cpf, senha) VALUES (?, ?, ?, ?, ?)";
             
@@ -58,7 +56,7 @@ public class Registro {
             
             stmt.setString(1, nome);
             stmt.setString(2, email);
-            stmt.setString(3, idade);
+            stmt.setString(3, Integer.toString(idade));
             stmt.setString(4, cpf);
             stmt.setString(5, senha);
             
@@ -69,11 +67,9 @@ public class Registro {
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
         } catch (SQLException ex) {
             if(ex instanceof com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException){
-                System.out.println("CPF inválido!");
+                JOptionPane.showMessageDialog(null,"CPF inválido!");
                 
             }
             //System.out.println(ex);
@@ -84,20 +80,9 @@ public class Registro {
     
     public String[] consultar(String cpf){
         String[] resultado = new String[3];
-       /* 
-        String nome =  pessoa.getNome();
-        String email = pessoa.getEmail();
-        String idade = pessoa.getIdade();
-        String cpf = pessoa.getCpf();
-        String senha = pessoa.getSenha();*/
+       
     try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "SELECT * FROM usuario WHERE cpf = ?";
             
@@ -115,24 +100,13 @@ public class Registro {
             }
             
             
-      /*      String nome = rs.getString("nome");
-            String email = rs.getString("email");
-            String idade = rs.getString("idade");
-            
-            object[0] = nome;
-            object[1] = email;
-            object[2] = idade;*/
-            
-            
             stmt.executeQuery();
             
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
         } catch (SQLException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null,ex);
         }
             return resultado;
     }
@@ -140,21 +114,10 @@ public class Registro {
     public void atualizar(String cpf, Usuario pessoa){
         String nome = pessoa.getNome();
         String email = pessoa.getEmail();
-        String idade = pessoa.getIdade();
-       /* 
-        String nome =  pessoa.getNome();
-        String email = pessoa.getEmail();
-        String idade = pessoa.getIdade();
-        String cpf = pessoa.getCpf();
-        String senha = pessoa.getSenha();*/
+        int idade = pessoa.getIdade();
+       
     try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "UPDATE usuario SET nome = ?, email = ?, idade = ? WHERE cpf = ?";
             
@@ -162,7 +125,7 @@ public class Registro {
             
             stmt.setString(1, nome);
             stmt.setString(2, email);
-            stmt.setString(3, idade);
+            stmt.setString(3, Integer.toString(idade));
             stmt.setString(4, cpf);
             
             
@@ -171,10 +134,8 @@ public class Registro {
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
         } catch (SQLException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null,ex);
         }
             
     }
@@ -183,12 +144,6 @@ public class Registro {
         
          try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "DELETE FROM usuario WHERE idusuario = ?";
             
@@ -197,24 +152,13 @@ public class Registro {
             stmt.setString(1, cpf);
             
             
-      /*      String nome = rs.getString("nome");
-            String email = rs.getString("email");
-            String idade = rs.getString("idade");
-            
-            object[0] = nome;
-            object[1] = email;
-            object[2] = idade;*/
-            
-            
             
             stmt.executeUpdate();
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
         } catch (SQLException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null,ex);
         }
             
             
@@ -224,12 +168,6 @@ public class Registro {
     public void alterarSenha(String cpf, String senha){
         try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "UPDATE usuario SET senha = ? WHERE cpf = ?";
             
@@ -244,10 +182,8 @@ public class Registro {
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
         } catch (SQLException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null,ex);
         }
     
     
@@ -257,12 +193,6 @@ public class Registro {
         
     try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "UPDATE medicamentos SET data_inicio = CURRENT_DATE(), data_final = DATE_ADD(CURDATE(), INTERVAL ? DAY) WHERE nome = ?";
             
@@ -278,13 +208,37 @@ public class Registro {
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
         } catch (SQLException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null,ex);
         }
     
     }
+    
+    public void data_atualizada(String nome, int periodo){
+        
+    try {
+            // TODO add your handling code here:
+            
+            String query = "UPDATE medicamentos SET  data_final = DATE_ADD(data_inicio, INTERVAL ? DAY) WHERE nome = ?";
+            
+            PreparedStatement stmt = con.prepareStatement(query);
+            Login l = new Login();
+            id_c = l.recuperar_id();
+            stmt.setString(1, Integer.toString(periodo));
+            stmt.setString(2, nome);
+       
+            
+            stmt.executeUpdate();
+            
+            stmt.close();
+            con.close();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,ex);
+        }
+    
+    }
+    
     public void adicionarMedicamento(Medicamento medicamento){
         String nome =  medicamento.getNome();
         String descricao = medicamento.getDescricao();
@@ -295,12 +249,6 @@ public class Registro {
         
         try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "INSERT INTO medicamentos (nome, descricao, quantidade, categoria, periodo, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
             
@@ -324,10 +272,8 @@ public class Registro {
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
         } catch (SQLException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null,ex);
         }
     
     
@@ -337,12 +283,6 @@ public class Registro {
         
         try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "INSERT INTO superintendenciamed (nome_medicamento, data, hora, confirmacao, id_usuario, id_medicamento) VALUES (?, CURRENT_DATE(), CURRENT_TIME(), ?, ?, ?)";
             
@@ -359,10 +299,8 @@ public class Registro {
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
         } catch (SQLException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null,ex);
         }
     
     }
@@ -377,12 +315,6 @@ public class Registro {
         
         try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "UPDATE medicamentos SET nome = ?, descricao = ?, quantidade = ?, categoria = ?, periodo = ? WHERE idmedicamentos = ?";
             
@@ -399,17 +331,14 @@ public class Registro {
             
             
             
-            
-            stmt.executeUpdate();
             Registro r = new Registro();
-            r.data(nome, periodo);
+            r.data_atualizada(nome, periodo);
+            stmt.executeUpdate();
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
-        } catch (SQLException ex) {
-            System.out.println(ex);
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,ex);
         }
     
     }
@@ -418,38 +347,20 @@ public class Registro {
     public void excluirMedicamento(int idMedicamento){
         try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "DELETE FROM medicamentos WHERE idmedicamentos = ?";
             
             PreparedStatement stmt = con.prepareStatement(query);
             
             stmt.setString(1, Integer.toString(idMedicamento));
-            
-            
-      /*      String nome = rs.getString("nome");
-            String email = rs.getString("email");
-            String idade = rs.getString("idade");
-            
-            object[0] = nome;
-            object[1] = email;
-            object[2] = idade;*/
-            
-            
+
             
             stmt.executeUpdate();
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
-        } catch (SQLException ex) {
-            System.out.println(ex);
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,ex);
         }
     
     }

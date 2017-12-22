@@ -35,7 +35,7 @@ CREATE TABLE `superintendenciamed` (
   KEY `fk_id_medicamento_idx` (`id_medicamento`),
   CONSTRAINT `fk_id_medicamento` FOREIGN KEY (`id_medicamento`) REFERENCES `medicamentos` (`idmedicamentos`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `fk_id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `superintendenciamed` (
 
 LOCK TABLES `superintendenciamed` WRITE;
 /*!40000 ALTER TABLE `superintendenciamed` DISABLE KEYS */;
-INSERT INTO `superintendenciamed` VALUES (1,NULL,NULL,'10:10:00',0,NULL,NULL),(2,'Multigrip','2017-12-12','21:14:33',1,8,9),(4,'Multigrip','2017-12-16','17:33:58',1,8,9),(5,'Diclofenaco','2017-12-16','18:03:11',1,8,12),(6,'Buscofem','2017-12-16','23:17:42',1,8,16);
+INSERT INTO `superintendenciamed` VALUES (1,NULL,NULL,'10:10:00',0,NULL,NULL),(2,'Multigrip','2017-12-12','21:14:33',1,8,9),(4,'Multigrip','2017-12-16','17:33:58',1,8,9),(5,'Diclofenaco','2017-12-16','18:03:11',1,8,12),(6,'Buscofem','2017-12-16','23:17:42',1,8,16),(7,'Diclofenaco','2017-12-20','21:26:31',1,8,12),(8,'Multigrip','2017-12-21','19:42:48',1,8,9),(9,'Diclofenaco','2017-12-21','20:56:03',1,8,12),(10,'Diclofenaco','2017-12-21','21:27:59',1,8,12),(11,'Buscofem','2017-12-21','21:28:54',1,8,16);
 /*!40000 ALTER TABLE `superintendenciamed` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-17 13:53:03
+-- Dump completed on 2017-12-21 23:39:11

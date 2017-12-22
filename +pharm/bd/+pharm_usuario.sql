@@ -32,7 +32,7 @@ CREATE TABLE `usuario` (
   `logado` int(1) DEFAULT NULL,
   PRIMARY KEY (`idusuario`),
   UNIQUE KEY `cpf_UNIQUE` (`cpf`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (8,'Dayane','dayane.vitoria@hotmail.com',19,'111.111.111-11','KyOmT8U+buZMSqo1SfJlmw==',1);
+INSERT INTO `usuario` VALUES (8,'Dayane','dayane@hotmail.com',19,'111.111.111-11','KyOmT8U+buZMSqo1SfJlmw==',0),(12,'Vitória','vitoria@gmail.com',19,'222.222.222-22','KyOmT8U+buZMSqo1SfJlmw==',0);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-17 13:53:04
+-- Dump completed on 2017-12-21 23:39:12

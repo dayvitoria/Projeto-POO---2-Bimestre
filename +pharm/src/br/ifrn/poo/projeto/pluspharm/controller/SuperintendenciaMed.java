@@ -5,20 +5,27 @@
  */
 package br.ifrn.poo.projeto.pluspharm.controller;
 
+
 import java.sql.Date;
+import java.sql.Time;
 
 /**
  *
  * @author dayan
  */
 public class SuperintendenciaMed {
-    protected String hora;
+    
+    protected String nome_medicamento;
+    protected Time hora;
     protected int periodo;
     protected boolean confirmacao;
-    protected Date data_inicio;
-    protected Date data_final;
+    protected Date data;
 
-    public String getHora() {
+    public String getNome_medicamento() {
+        return nome_medicamento;
+    }
+    
+    public Time getHora() {
         return hora;
     }
 
@@ -30,12 +37,8 @@ public class SuperintendenciaMed {
         return confirmacao;
     }
 
-    public Date getData_inicio() {
-        return data_inicio;
-    }
-
-    public Date getData_final() {
-        return data_final;
+    public Date getData() {
+        return data;
     }
     
     

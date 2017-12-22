@@ -129,7 +129,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Login l = new Login();&#xa;int id = l.recuperar_id();&#xa;try {&#xa;            // TODO add your handling code here:&#xa;&#xa;            Class.forName(&quot;com.mysql.jdbc.Driver&quot;);&#xa;            &#xa;            Connection con;&#xa;            &#xa;            con = DriverManager.getConnection(&quot;jdbc:mysql://127.0.0.1/+pharm&quot;, &quot;root&quot;, &quot;&quot;);&#xa;            &#xa;            String query = &quot;SELECT nome_medicamento, DATE_FORMAT(data, &apos;%d/%m/%y&apos;) as data, hora FROM  superintendenciamed JOIN usuario ON id_usuario = idusuario  WHERE confirmacao = 1 and idusuario = ?&quot;;&#xa;            &#xa;            PreparedStatement stmt = con.prepareStatement(query);&#xa;            &#xa;            stmt.setString(1, Integer.toString(id));&#xa;            &#xa;            ResultSet rs = stmt.executeQuery();&#xa;            &#xa;            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();&#xa;            &#xa;            model.setNumRows(0);&#xa;            &#xa;            while(rs.next()){&#xa;                model.addRow(new Object[]{rs.getString(&quot;nome_medicamento&quot;), rs.getString(&quot;data&quot;), rs.getString(&quot;hora&quot;)});&#xa;                &#xa;            }&#xa;            stmt.executeQuery();&#xa;            &#xa;            stmt.close();&#xa;            con.close();&#xa;            &#xa;        } catch (ClassNotFoundException ex) {&#xa;            System.out.println(&quot;N&#xe3;o foi poss&#xed;vel encontrar a classe&quot;);&#xa;        } catch (SQLException ex) {&#xa;            System.out.println(&quot;Ocorreu um erro de SQL&quot;);&#xa;        }"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Login l = new Login();&#xa;int id = l.recuperar_id();&#xa;Conexao conexao = new Conexao();&#xa;Connection con = conexao.getConexao();&#xa;&#xa;try {&#xa;            // TODO add your handling code here:&#xa;            &#xa;            String query = &quot;SELECT nome_medicamento, DATE_FORMAT(data, &apos;%d/%m/%y&apos;) as data, hora FROM  superintendenciamed JOIN usuario ON id_usuario = idusuario  WHERE confirmacao = 1 and idusuario = ?&quot;;&#xa;            &#xa;            PreparedStatement stmt = con.prepareStatement(query);&#xa;            &#xa;            stmt.setString(1, Integer.toString(id));&#xa;            &#xa;            ResultSet rs = stmt.executeQuery();&#xa;            &#xa;            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();&#xa;            &#xa;            model.setNumRows(0);&#xa;            &#xa;            while(rs.next()){&#xa;                model.addRow(new Object[]{rs.getString(&quot;nome_medicamento&quot;), rs.getString(&quot;data&quot;), rs.getString(&quot;hora&quot;)});&#xa;                &#xa;            }&#xa;            stmt.executeQuery();&#xa;            &#xa;            stmt.close();&#xa;            con.close();&#xa;            &#xa;        }catch (SQLException ex) {&#xa;            JOptionPane.showMessageDialog(null,&quot;Ocorreu um erro de SQL&quot;);&#xa;        }"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -137,14 +137,15 @@
         <Component class="javax.swing.JComboBox" name="jComboBox1">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
+              <StringArray count="2">
                 <StringItem index="0" value="Nome"/>
                 <StringItem index="1" value="Data"/>
-                <StringItem index="2" value="Hora"/>
-                <StringItem index="3" value=" "/>
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>

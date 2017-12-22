@@ -5,6 +5,7 @@
  */
 package br.ifrn.poo.projeto.pluspharm.view;
 import br.ifrn.poo.projeto.pluspharm.controller.*;
+import javax.swing.JOptionPane;
 /**
  *
  * @author dayan
@@ -230,15 +231,22 @@ public class CadastroMedicamentoJ extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String nome = jTextField1.getText();
-        String descricao = jTextField2.getText();
-        int quantidade = Integer.parseInt(jTextField3.getText());
-        String categoria = (String) jComboBox1.getSelectedItem();
-        int periodo = Integer.parseInt(jTextField4.getText());
+        try{
+            String nome = jTextField1.getText();
+            String descricao = jTextField2.getText();
+            int quantidade = Integer.parseInt(jTextField3.getText());
+            String categoria = (String) jComboBox1.getSelectedItem();
+            int periodo = Integer.parseInt(jTextField4.getText());
+            
+            
+            Medicamento med = new Medicamento(nome, descricao, quantidade, categoria, periodo);
+            Registro cad = new Registro();
+            cad.adicionarMedicamento(med);
+            JOptionPane.showMessageDialog(null,"Medicamento Cadastrado!");
+        }catch(java.lang.NumberFormatException ex){
+            JOptionPane.showMessageDialog(null,"Alguns campos estão incorretos!");
+        }
         
-        Medicamento med = new Medicamento(nome, descricao, quantidade, categoria, periodo);
-        Registro cad = new Registro();
-        cad.adicionarMedicamento(med);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

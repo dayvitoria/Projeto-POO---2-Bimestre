@@ -5,6 +5,7 @@
  */
 package br.ifrn.poo.projeto.pluspharm.view;
 import br.ifrn.poo.projeto.pluspharm.controller.*;
+import javax.swing.JOptionPane;
 /**
  *
  * @author dayan
@@ -46,6 +47,7 @@ public class CadastroJ extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -112,6 +114,15 @@ public class CadastroJ extends javax.swing.JDialog {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        jButton2.setText("Limpar");
+        jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -145,6 +156,8 @@ public class CadastroJ extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -171,7 +184,9 @@ public class CadastroJ extends javax.swing.JDialog {
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(28, 28, 28)
-                .addComponent(jButton1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
@@ -199,18 +214,37 @@ public class CadastroJ extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String nome = jTextField1.getText();
-        String email = jTextField2.getText();
-        String idade = jTextField3.getText();
-        String cpf = jTextField4.getText();
-        String senha = jPasswordField1.getText();
         
-        Registro cad;
-        cad = new Registro();
-        Usuario p = new Usuario(nome, email, idade, cpf, senha);
-        cad.cadastrar(p);
+        try{
+            String nome = jTextField1.getText();
+            String email = jTextField2.getText();
+            int idade = Integer.parseInt(jTextField3.getText());
+            String cpf = jTextField4.getText();
+            String senha = jPasswordField1.getText();
+            
+            
+                Registro cad;
+                cad = new Registro();
+                Usuario p = new Usuario(nome, email, idade, cpf, senha);
+                cad.cadastrar(p);
+
+                JOptionPane.showMessageDialog(null,"Usuário Cadastrado!");
+                dispose();
+            
+        }catch(java.lang.NumberFormatException ex){
+            JOptionPane.showMessageDialog(null,"Alguns campos estão incorretos!");
+        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jPasswordField1.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,6 +291,7 @@ public class CadastroJ extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

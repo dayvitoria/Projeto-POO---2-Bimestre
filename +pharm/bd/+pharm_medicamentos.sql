@@ -35,7 +35,7 @@ CREATE TABLE `medicamentos` (
   PRIMARY KEY (`idmedicamentos`),
   KEY `fk_id_idx` (`id_usuario`),
   CONSTRAINT `fk_id` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `medicamentos` (
 
 LOCK TABLES `medicamentos` WRITE;
 /*!40000 ALTER TABLE `medicamentos` DISABLE KEYS */;
-INSERT INTO `medicamentos` VALUES (9,'Multigrip','gripe',10,'Antibióticos','2017-12-17','2017-12-27',10,8),(12,'Diclofenaco','dores',10,'Analségicos','2017-12-16','2017-12-26',10,8),(16,'Buscofem','remédio pra cólica',2,'Analségicos','2017-12-16','2017-12-24',8,8);
+INSERT INTO `medicamentos` VALUES (9,'Multigrip','gripe',10,'Antibióticos','2017-12-21','2017-12-31',10,8),(12,'Diclofenaco','dores',5,'Antibióticos','2017-12-16','2017-12-26',10,8),(16,'Buscofem','remédio pra cólica',2,'Analségicos','2017-12-16','2017-12-24',8,8);
 /*!40000 ALTER TABLE `medicamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-17 13:53:03
+-- Dump completed on 2017-12-21 23:39:11

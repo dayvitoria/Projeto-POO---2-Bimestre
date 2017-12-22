@@ -6,6 +6,7 @@
 package br.ifrn.poo.projeto.pluspharm.view;
 import br.ifrn.poo.projeto.pluspharm.controller.Login;
 import br.ifrn.poo.projeto.pluspharm.controller.Registro;
+import javax.swing.JOptionPane;
 /**
  *
  * @author dayan
@@ -249,13 +250,17 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        Login l = new Login();
-        Registro excluir = new Registro();
-        excluir.excluir(Integer.toString(l.recuperar_id()));
-        //System.out.println(l.);
-        dispose();
-        MenuPrincipal menu = new MenuPrincipal();
-        menu.setVisible(true);
+        int resposta = JOptionPane.showConfirmDialog( null,"Confirma a exclusão", null,JOptionPane.YES_NO_OPTION);
+        if(resposta == 0){
+            Login l = new Login();
+            Registro excluir = new Registro();
+            excluir.excluir(Integer.toString(l.recuperar_id()));
+        
+            dispose();
+            MenuPrincipal menu = new MenuPrincipal();
+            menu.setVisible(true);
+        }
+     /*   */
     }//GEN-LAST:event_jButton7ActionPerformed
 
     /**

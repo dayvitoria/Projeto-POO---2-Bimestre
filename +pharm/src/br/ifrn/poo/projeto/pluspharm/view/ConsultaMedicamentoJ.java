@@ -12,13 +12,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import br.ifrn.poo.projeto.pluspharm.controller.*;
+import br.ifrn.poo.projeto.pluspharm.model.Conexao;
 import static java.time.zone.ZoneRulesProvider.refresh;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author dayan
  */
 public class ConsultaMedicamentoJ extends javax.swing.JDialog {
 
+    Conexao conexao = new Conexao();
     /**
      * Creates new form ConsultaMedicamentoJ
      */
@@ -113,15 +118,11 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
         ));
         Login l = new Login();
         int id = l.recuperar_id();
+        Conexao conexao = new Conexao();
+        Connection con = conexao.getConexao();
 
         try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-
-            Connection con;
-
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
 
             String query = "SELECT idmedicamentos, med.nome, descricao, quantidade, categoria, DATE_FORMAT(data_inicio, '%d/%m/%y') as data_inicio, DATE_FORMAT(data_final, '%d/%m/%y') as data_final FROM  medicamentos  med JOIN usuario ON id_usuario = idusuario WHERE idusuario = ?";
 
@@ -144,10 +145,8 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
             stmt.close();
             con.close();
 
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
-        } catch (SQLException ex) {
-            System.out.println("Ocorreu um erro de SQL");
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Ocorreu um erro de SQL");
         }
         jTable1.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
@@ -285,8 +284,12 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
         String index = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
         String nome = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1);
         
-        Registro r = new Registro();
-        r.confirmarMedicamentoTomado(nome, Integer.parseInt(index));
+        int resposta = JOptionPane.showConfirmDialog( null,"Confirmar o medicamento", null,JOptionPane.YES_NO_OPTION);
+        if(resposta == 0){
+            Registro r = new Registro();
+            r.confirmarMedicamentoTomado(nome, Integer.parseInt(index));
+        }
+        
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -295,12 +298,15 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
         // TODO add your handling code here:
         String index = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
         
+        int resposta = JOptionPane.showConfirmDialog( null,"Confirma a exclusão", null,JOptionPane.YES_NO_OPTION);
+        if(resposta == 0){
+            Registro r = new Registro();
+            r.excluirMedicamento(Integer.parseInt(index));
+            dispose();
+            ConsultaMedicamentoJ consulta = new ConsultaMedicamentoJ(null, true);
+            consulta.setVisible(true);
+        }
         
-        Registro r = new Registro();
-        r.excluirMedicamento(Integer.parseInt(index));
-        dispose();
-        ConsultaMedicamentoJ consulta = new ConsultaMedicamentoJ(null, true);
-        consulta.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -310,6 +316,7 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         String categoria;
+        Connection con2 = conexao.getConexao();
         if(jComboBox1.getSelectedItem() == "Nome"){
             categoria = "nome";
         }else if(jComboBox1.getSelectedItem() == "Categoria"){
@@ -319,30 +326,29 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
         }else{
             categoria = "data_final";
         }
-        String query = "";
+        String query = "", texto = "";
+        PreparedStatement stmt;
         try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             if(categoria == "nome"){
-            query = "SELECT idmedicamentos, med.nome, descricao, quantidade, categoria, DATE_FORMAT(data_inicio, '%d/%m/%y') as data_inicio, DATE_FORMAT(data_final, '%d/%m/%y') as data_final FROM  medicamentos  med JOIN usuario ON id_usuario = idusuario WHERE med.nome LIKE ?";
+            query = "SELECT idmedicamentos, med.nome, descricao, quantidade, categoria, DATE_FORMAT(data_inicio, '%d/%m/%y') as data_inicio, DATE_FORMAT(data_final, '%d/%m/%y') as data_final FROM  medicamentos  med JOIN usuario ON id_usuario = idusuario WHERE med.nome LIKE ?";   
+            texto = "%"+jTextField1.getText()+"%";
             }else if(categoria == "categoria"){
             query = "SELECT idmedicamentos, med.nome, descricao, quantidade, categoria, DATE_FORMAT(data_inicio, '%d/%m/%y') as data_inicio, DATE_FORMAT(data_final, '%d/%m/%y') as data_final FROM  medicamentos  med JOIN usuario ON id_usuario = idusuario WHERE categoria LIKE ?";
+            texto = "%"+jTextField1.getText()+"%";
             }else if(categoria == "data_inicio"){
             query = "SELECT idmedicamentos, med.nome, descricao, quantidade, categoria, DATE_FORMAT(data_inicio, '%d/%m/%y') as data_inicio, DATE_FORMAT(data_final, '%d/%m/%y') as data_final FROM  medicamentos  med JOIN usuario ON id_usuario = idusuario WHERE data_inicio = DATE_FORMAT(?, '%d/%m/%y')";
+            texto = jTextField1.getText();
             }else if(categoria == "data_final"){
             query = "SELECT idmedicamentos, med.nome, descricao, quantidade, categoria, DATE_FORMAT(data_inicio, '%d/%m/%y') as data_inicio, DATE_FORMAT(data_final, '%d/%m/%y') as data_final FROM  medicamentos  med JOIN usuario ON id_usuario = idusuario WHERE data_final = DATE_FORMAT(?, '%d/%m/%y')";
+            texto = jTextField1.getText();
             }
             
-            PreparedStatement stmt = con.prepareStatement(query);
+            stmt = con2.prepareStatement(query);
             
-            
-            stmt.setString(1, jTextField1.getText());
+
+            stmt.setString(1, texto);
             
             ResultSet rs = stmt.executeQuery();
             
@@ -357,11 +363,9 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
             stmt.executeQuery();
             
             stmt.close();
-            con.close();
+            con2.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
-        } catch (SQLException ex) {
+        }catch (SQLException ex) {
             System.out.println("Ocorreu um erro de SQL");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -369,7 +373,7 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         String index = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
-        
+        Connection con2 = conexao.getConexao();
         
 
         String nome = "";
@@ -379,16 +383,10 @@ public class ConsultaMedicamentoJ extends javax.swing.JDialog {
         
 try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "SELECT nome, descricao, quantidade, periodo FROM  medicamentos  WHERE idmedicamentos =  ?";
             
-            PreparedStatement stmt = con.prepareStatement(query);
+            PreparedStatement stmt = con2.prepareStatement(query);
             
             stmt.setString(1, index);
             
@@ -408,18 +406,17 @@ try {
             stmt.executeQuery();
             
             stmt.close();
-            con.close();
+            con2.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
-        } catch (SQLException ex) {
-            System.out.println("Ocorreu um erro de SQL");
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Ocorreu um erro de SQL");
         }
 
         AtualizarMedicamentoJ atualizar = new AtualizarMedicamentoJ(null, true);
         atualizar.receber(nome, descricao, quantidade, periodo);
         atualizar.getId(Integer.parseInt(index));
         atualizar.setVisible(true);
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

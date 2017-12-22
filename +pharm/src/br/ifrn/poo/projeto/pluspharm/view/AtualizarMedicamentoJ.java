@@ -5,6 +5,7 @@
  */
 package br.ifrn.poo.projeto.pluspharm.view;
 import br.ifrn.poo.projeto.pluspharm.controller.*;
+import javax.swing.JOptionPane;
 /**
  *
  * @author dayan
@@ -218,6 +219,8 @@ public class AtualizarMedicamentoJ extends javax.swing.JDialog {
         Registro r = new Registro();
         
         r.atualizarMedicamento(id_med, m);
+        JOptionPane.showMessageDialog(null,"Medicamento Atualizado!");
+        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

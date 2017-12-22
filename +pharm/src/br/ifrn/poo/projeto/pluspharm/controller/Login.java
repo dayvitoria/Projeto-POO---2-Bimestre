@@ -5,6 +5,7 @@
  */
 package br.ifrn.poo.projeto.pluspharm.controller;
 
+import br.ifrn.poo.projeto.pluspharm.model.Conexao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,6 +18,8 @@ import java.sql.SQLException;
  */
 public class Login {
     int id_c;
+    Conexao conexao = new Conexao();
+    Connection con = conexao.getConexao();
     
     public boolean autenticar(String cpf, String senha){
         boolean retorno = false;
@@ -26,11 +29,7 @@ public class Login {
         try {
             // TODO add your handling code here:
 
-            Class.forName("com.mysql.jdbc.Driver");
             
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "UPDATE usuario SET logado = ? WHERE cpf = ? and senha = ?";
             
@@ -63,12 +62,11 @@ public class Login {
             if(stmt.executeUpdate()== 1){
                 retorno = true;
             }
+           
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
-        } catch (SQLException ex) {
+        }catch (SQLException ex) {
             System.out.println(ex);
         }
             
@@ -79,11 +77,7 @@ public class Login {
          try {
             // TODO add your handling code here:
 
-            Class.forName("com.mysql.jdbc.Driver");
             
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "UPDATE usuario SET logado = ? WHERE logado = '1'";
             
@@ -91,23 +85,7 @@ public class Login {
             
             stmt.setString(1, "0");
             
-           // ResultSet rs = stmt.executeQuery();
-            
-          /*  while(rs.next()){
-                login = rs.getString("cpf");
-            }*/
-            
-            
-            
-            
-            
-      /*      String nome = rs.getString("nome");
-            String email = rs.getString("email");
-            String idade = rs.getString("idade");
-            
-            object[0] = nome;
-            object[1] = email;
-            object[2] = idade;*/
+           
             
             
             stmt.executeUpdate();
@@ -115,33 +93,18 @@ public class Login {
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-            
-      //  return "Deu certo!";
-    
-    
     }
     
     public int recuperar_id(){
         int id_usuario = 0;
-        /* 
-        String nome =  pessoa.getNome();
-        String email = pessoa.getEmail();
-        String idade = pessoa.getIdade();
-        String cpf = pessoa.getCpf();
-        String senha = pessoa.getSenha();*/
+       
     try {
             // TODO add your handling code here:
 
-            Class.forName("com.mysql.jdbc.Driver");
             
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "SELECT idusuario FROM usuario WHERE logado = ?";
             
@@ -155,24 +118,13 @@ public class Login {
                 id_usuario = Integer.parseInt(rs.getString("idusuario"));
             
             }
-            
-            
-      /*      String nome = rs.getString("nome");
-            String email = rs.getString("email");
-            String idade = rs.getString("idade");
-            
-            object[0] = nome;
-            object[1] = email;
-            object[2] = idade;*/
-            
+                  
             
             stmt.executeQuery();
             
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
         } catch (SQLException ex) {
             System.out.println(ex);
         }
@@ -183,20 +135,11 @@ public class Login {
     public String recuperarNome(){
         String nome = "";
         
-        /* 
-        String nome =  pessoa.getNome();
-        String email = pessoa.getEmail();
-        String idade = pessoa.getIdade();
-        String cpf = pessoa.getCpf();
-        String senha = pessoa.getSenha();*/
+        
     try {
             // TODO add your handling code here:
 
-            Class.forName("com.mysql.jdbc.Driver");
             
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "SELECT nome FROM usuario WHERE logado = ?";
             
@@ -212,13 +155,7 @@ public class Login {
             }
             
             
-      /*      String nome = rs.getString("nome");
-            String email = rs.getString("email");
-            String idade = rs.getString("idade");
-            
-            object[0] = nome;
-            object[1] = email;
-            object[2] = idade;*/
+    
             
             
             stmt.executeQuery();
@@ -226,9 +163,7 @@ public class Login {
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
-        } catch (SQLException ex) {
+        }catch (SQLException ex) {
             System.out.println(ex);
         }
             return nome;
@@ -240,12 +175,6 @@ public class Login {
         
         try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection con;
-            
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
             
             String query = "SELECT cpf FROM usuario WHERE logado = ?";
             
@@ -261,22 +190,12 @@ public class Login {
             }
             
             
-      /*      String nome = rs.getString("nome");
-            String email = rs.getString("email");
-            String idade = rs.getString("idade");
-            
-            object[0] = nome;
-            object[1] = email;
-            object[2] = idade;*/
-            
             
             stmt.executeQuery();
             
             stmt.close();
             con.close();
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
         } catch (SQLException ex) {
             System.out.println(ex);
         }

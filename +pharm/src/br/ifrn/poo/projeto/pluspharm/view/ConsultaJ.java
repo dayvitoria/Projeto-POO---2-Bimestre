@@ -5,6 +5,7 @@
  */
 package br.ifrn.poo.projeto.pluspharm.view;
 import br.ifrn.poo.projeto.pluspharm.controller.*;
+import br.ifrn.poo.projeto.pluspharm.model.Conexao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author dayan
@@ -106,14 +108,10 @@ public class ConsultaJ extends javax.swing.JDialog {
         String nome;
         String email;
         int idade;
+        Conexao conexao = new Conexao();
+        Connection con = conexao.getConexao();
         try {
             // TODO add your handling code here:
-
-            Class.forName("com.mysql.jdbc.Driver");
-
-            Connection con;
-
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/+pharm", "root", "");
 
             String query = "SELECT nome, email, idade FROM  usuario  WHERE idusuario =  ?";
 
@@ -134,10 +132,8 @@ public class ConsultaJ extends javax.swing.JDialog {
             stmt.close();
             con.close();
 
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Não foi possível encontrar a classe");
-        } catch (SQLException ex) {
-            System.out.println("Ocorreu um erro de SQL");
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Ocorreu um erro de SQL");
         }
 
         jLabel3.setText("Nome:");
@@ -225,9 +221,11 @@ public class ConsultaJ extends javax.swing.JDialog {
         Usuario p = new Usuario();
         p.setNome(jTextField2.getText());
         p.setEmail(jTextField3.getText());
-        p.setIdade(jTextField4.getText());
+        p.setIdade(Integer.parseInt(jTextField4.getText()));
         String cpf = l.recuperarCpf();
         cad.atualizar(cpf, p);
+        JOptionPane.showMessageDialog(null,"Usuário Atualizado!");
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

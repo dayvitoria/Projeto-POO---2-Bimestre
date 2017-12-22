@@ -6,6 +6,7 @@
 package br.ifrn.poo.projeto.pluspharm.view;
 
 import br.ifrn.poo.projeto.pluspharm.controller.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -114,6 +115,11 @@ public class AlterarSenhaJ extends javax.swing.JDialog {
         jButton2.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jButton2.setText("Limpar");
         jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -178,12 +184,26 @@ public class AlterarSenhaJ extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(jPasswordField1.getText().equalsIgnoreCase(jPasswordField2.getText())){
-            Registro r = new Registro();
-            Login l = new Login();
-            r.alterarSenha(l.recuperarCpf(), jPasswordField1.getText());
+        if(jPasswordField1.getText().equalsIgnoreCase("")== false && jPasswordField2.getText().equalsIgnoreCase("")== false){
+            if(jPasswordField1.getText().equalsIgnoreCase(jPasswordField2.getText())){
+                Registro r = new Registro();
+                Login l = new Login();
+                r.alterarSenha(l.recuperarCpf(), jPasswordField1.getText());
+                JOptionPane.showMessageDialog(null,"Senha Alterada!");
+                dispose();
+            }else{
+            JOptionPane.showMessageDialog(null,"Senhas não conferem!");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"Campos de senhas vazios!");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        jPasswordField1.setText("");
+        jPasswordField2.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
